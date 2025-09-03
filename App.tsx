@@ -1,26 +1,30 @@
-
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Settings from './components/Settings';
-import { DEFAULT_NETWORKS } from './constants';
-import { Network } from './types';
+import Wallet from './components/Wallet';
+import Transactions from './components/Transactions';
+import Funding from './components/Funding';
+import NFTStudio from './components/NFTStudio';
+import TransactionModal from './components/TransactionModal';
+import { DEFAULT_NETWORKS, MOCK_TRANSACTIONS } from './constants';
+import { Network, Transaction } from './types';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState('Dashboard');
   const [networks, setNetworks] = useState<Network[]>(DEFAULT_NETWORKS);
   const [selectedNetworkId, setSelectedNetworkId] = useState<string>(DEFAULT_NETWORKS[0].id);
+  const [transactions, setTransactions] = useState<Transaction[]>(MOCK_TRANSACTIONS);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
   const selectedNetwork = networks.find(n => n.id === selectedNetworkId) || null;
 
   const handleDeleteNetwork = (networkId: string) => {
-    // Prevent deleting the currently selected network
     if (networkId === selectedNetworkId) {
       alert("Cannot delete the currently active network. Please switch to another network first.");
       return;
     }
-    // Prevent deleting default networks
     const networkToDelete = networks.find(n => n.id === networkId);
     if (networkToDelete && !networkToDelete.isCustom) {
         alert("Cannot delete a default network.");
@@ -29,19 +33,27 @@ const App: React.FC = () => {
     setNetworks(prev => prev.filter(n => n.id !== networkId));
   };
 
+  const handleDeleteTransaction = (transactionId: string) => {
+    setTransactions(currentTransactions =>
+        currentTransactions.filter(tx => tx.id !== transactionId)
+    );
+    setSelectedTransaction(null); // Close modal after deletion
+  };
 
   const renderContent = () => {
     switch (activeView) {
       case 'Dashboard':
-        return <Dashboard />;
+        return <Dashboard transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
       case 'Marketplace':
         return <div className="p-8 text-white">Marketplace Content</div>;
       case 'Wallet':
-        return <div className="p-8 text-white">Wallet Content</div>;
+        return <Wallet />;
+      case 'NFT Studio':
+        return <NFTStudio />;
       case 'Funding':
-        return <div className="p-8 text-white">Funding Content</div>;
+        return <Funding />;
       case 'Transactions':
-        return <div className="p-8 text-white">Transactions Content</div>;
+        return <Transactions transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
       case 'Settings':
         return <Settings 
                   networks={networks}
@@ -51,7 +63,7 @@ const App: React.FC = () => {
                   onDeleteNetwork={handleDeleteNetwork}
                 />;
       default:
-        return <Dashboard />;
+        return <Dashboard transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
     }
   };
   
@@ -64,6 +76,13 @@ const App: React.FC = () => {
           {renderContent()}
         </main>
       </div>
+       {selectedTransaction && (
+          <TransactionModal 
+              transaction={selectedTransaction} 
+              onClose={() => setSelectedTransaction(null)}
+              onDelete={handleDeleteTransaction}
+          />
+      )}
     </div>
   );
 };

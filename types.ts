@@ -34,3 +34,20 @@ export type Network = {
   currencySymbol: string;
   isCustom?: boolean;
 };
+
+export type WalletAsset = {
+  id: string;
+  name: string;
+  symbol: string;
+  balance: number;
+  usdValue: number;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+export type GeneratedNFT = {
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    txHash: string;
+};

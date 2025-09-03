@@ -1,39 +1,20 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import Card from './Card';
 import Chart from './Chart';
-import { MOCK_CHART_DATA, MOCK_TRANSACTIONS, MOCK_PRODUCTS } from '../constants';
+import { MOCK_CHART_DATA, MOCK_PRODUCTS } from '../constants';
 import { Transaction, Product } from '../types';
-import TransactionModal from './TransactionModal';
+import TransactionRow from './TransactionRow';
+
+interface DashboardProps {
+    transactions: Transaction[];
+    onSelectTransaction: (transaction: Transaction) => void;
+}
 
 const ArrowUpRightIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-green-400">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
     </svg>
 );
-
-
-const TransactionRow: React.FC<{ transaction: Transaction; onClick: () => void; }> = ({ transaction, onClick }) => {
-    const isPositive = transaction.amount > 0;
-    const amountColor = isPositive ? 'text-green-400' : 'text-red-400';
-    const sign = isPositive ? '+' : '';
-
-    return (
-        <button 
-            onClick={onClick} 
-            className="flex items-center justify-between py-3 border-b border-gray-700 last:border-b-0 w-full text-left hover:bg-gray-700/50 rounded-lg transition-colors duration-200 px-2 -mx-2"
-            aria-label={`View details for transaction: ${transaction.description}`}
-        >
-            <div className="flex-1 min-w-0">
-                <p className="font-medium text-white truncate">{transaction.description}</p>
-                <p className="text-sm text-gray-400">{new Date(transaction.timestamp).toLocaleString()}</p>
-            </div>
-            <div className={`text-right font-semibold ${amountColor} pl-4`}>
-                {sign}{transaction.amount.toLocaleString()} {transaction.currency}
-            </div>
-        </button>
-    );
-};
 
 const ProductCard: React.FC<{product: Product}> = ({ product }) => (
     <div className="bg-gray-700 rounded-lg overflow-hidden group">
@@ -52,16 +33,8 @@ const ProductCard: React.FC<{product: Product}> = ({ product }) => (
 );
 
 
-const Dashboard: React.FC = () => {
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
-    const [transactions, setTransactions] = useState<Transaction[]>(MOCK_TRANSACTIONS);
-
-    const handleDeleteTransaction = (transactionId: string) => {
-        setTransactions(currentTransactions =>
-            currentTransactions.filter(tx => tx.id !== transactionId)
-        );
-        setSelectedTransaction(null); // Close modal after deletion
-    };
+const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction }) => {
+    const recentTransactions = transactions.slice(0, 4);
 
     return (
         <div className="p-4 md:p-8 space-y-8">
@@ -109,18 +82,11 @@ const Dashboard: React.FC = () => {
                 <Card title="Recent Transactions" className="lg:col-span-2">
                     <div className="flow-root">
                         <div className="-my-3 divide-y divide-gray-700">
-                             {transactions.map(tx => <TransactionRow key={tx.id} transaction={tx} onClick={() => setSelectedTransaction(tx)} />)}
+                             {recentTransactions.map(tx => <TransactionRow key={tx.id} transaction={tx} onClick={() => onSelectTransaction(tx)} />)}
                         </div>
                     </div>
                 </Card>
             </div>
-            {selectedTransaction && (
-                <TransactionModal 
-                    transaction={selectedTransaction} 
-                    onClose={() => setSelectedTransaction(null)}
-                    onDelete={handleDeleteTransaction}
-                />
-            )}
         </div>
     );
 };
