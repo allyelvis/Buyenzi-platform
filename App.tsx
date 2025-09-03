@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -11,6 +10,10 @@ import NFTStudio from './components/NFTStudio';
 import Explorer from './components/Explorer';
 import Chatbot from './components/Chatbot';
 import TV from './components/TV';
+import Profile from './components/Profile';
+import DAppBuilder from './components/DAppBuilder';
+import Integrations from './components/Integrations';
+import Marketplace from './components/Marketplace';
 import TransactionModal from './components/TransactionModal';
 import { DEFAULT_NETWORKS, MOCK_TRANSACTIONS } from './constants';
 import { Network, Transaction } from './types';
@@ -49,11 +52,13 @@ const App: React.FC = () => {
       case 'Dashboard':
         return <Dashboard transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
       case 'Marketplace':
-        return <div className="p-8 text-white">Marketplace Content</div>;
+        return <Marketplace />;
       case 'Wallet':
         return <Wallet />;
       case 'NFT Studio':
         return <NFTStudio />;
+      case 'dApp Builder':
+        return <DAppBuilder />;
       case 'TV':
         return <TV />;
       case 'Funding':
@@ -62,6 +67,10 @@ const App: React.FC = () => {
         return <Transactions transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
       case 'Explorer':
         return <Explorer />;
+      case 'Profile':
+        return <Profile />;
+      case 'Integrations':
+        return <Integrations />;
       case 'Settings':
         return <Settings 
                   networks={networks}
@@ -79,9 +88,11 @@ const App: React.FC = () => {
     <div className="flex h-screen bg-gray-900 text-gray-200 font-sans">
       <Sidebar activeView={activeView} setActiveView={setActiveView} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header selectedNetwork={selectedNetwork} />
+        <Header selectedNetwork={selectedNetwork} setActiveView={setActiveView} />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900">
-          {renderContent()}
+          <div className="fade-in" key={activeView}>
+            {renderContent()}
+          </div>
         </main>
       </div>
       <Chatbot />

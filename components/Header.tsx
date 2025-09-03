@@ -10,9 +10,10 @@ const BellIcon = () => (
 
 interface HeaderProps {
     selectedNetwork: Network | null;
+    setActiveView: (view: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ selectedNetwork }) => {
+const Header: React.FC<HeaderProps> = ({ selectedNetwork, setActiveView }) => {
   return (
     <header className="flex-shrink-0 bg-gray-800 border-b border-gray-700">
       <div className="flex items-center justify-between p-4 h-20">
@@ -47,17 +48,17 @@ const Header: React.FC<HeaderProps> = ({ selectedNetwork }) => {
             </span>
           </button>
           
-          <div className="flex items-center space-x-3">
+          <button onClick={() => setActiveView('Profile')} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-colors">
             <img 
               src="https://picsum.photos/seed/user/40/40" 
               alt="User" 
               className="h-10 w-10 rounded-full object-cover border-2 border-brand-secondary"
             />
-            <div className="hidden md:block">
+            <div className="hidden md:block text-left">
               <p className="text-white font-semibold text-sm">Alex Ryder</p>
               <p className="text-gray-400 text-xs">Tier: Quantum</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>

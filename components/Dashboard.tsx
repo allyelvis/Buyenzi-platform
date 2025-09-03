@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from './Card';
 import TradingViewChart from './TradingViewChart';
-import { MOCK_PRODUCTS } from '../constants';
+import MarketData from './MarketData';
+import { MOCK_PRODUCTS, BuyIcon, ShopIcon, StakeIcon } from '../constants';
 import { Transaction, Product } from '../types';
 import TransactionRow from './TransactionRow';
 
@@ -32,15 +33,27 @@ const ProductCard: React.FC<{product: Product}> = ({ product }) => (
     </div>
 );
 
+const ActionButton: React.FC<{ icon: React.ComponentType<{className?: string}>; title: string; subtitle: string; }> = ({ icon: Icon, title, subtitle }) => (
+    <button className="w-full text-left p-4 rounded-lg bg-gray-700 hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group flex items-center gap-4">
+        <div className="bg-gray-800 p-3 rounded-lg group-hover:bg-brand-secondary">
+            <Icon className="w-6 h-6 text-brand-primary group-hover:text-gray-900 transition-colors" />
+        </div>
+        <div>
+            <p className="font-bold text-white group-hover:text-gray-900">{title}</p>
+            <p className="text-sm text-gray-400 group-hover:text-gray-700">{subtitle}</p>
+        </div>
+    </button>
+);
+
 
 const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction }) => {
     const recentTransactions = transactions.slice(0, 4);
 
     return (
         <div className="p-4 md:p-8 space-y-8">
-            {/* Top Row: Portfolio */}
-            <div className="grid grid-cols-1 gap-8">
-                <Card title="Portfolio Overview">
+            {/* Top Row: Portfolio & Market Data */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <Card title="Portfolio Overview" className="lg:col-span-2">
                     <div className="flex items-start justify-between mb-4">
                         <div>
                             <p className="text-gray-400 text-sm">Total Balance</p>
@@ -55,24 +68,16 @@ const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction
                       <TradingViewChart symbol="BITSTAMP:BTCUSD" />
                     </div>
                 </Card>
+                <MarketData />
             </div>
 
             {/* Bottom Row: Actions, Products, and Transactions */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                  <Card title="Quick Actions">
                     <div className="space-y-4">
-                         <button className="w-full text-left p-4 rounded-lg bg-gray-700 hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
-                            <p className="font-bold text-white group-hover:text-gray-900">Buy Cryptocurrency</p>
-                            <p className="text-sm text-gray-400 group-hover:text-gray-700">Instantly purchase BTC, ETH, and more.</p>
-                        </button>
-                         <button className="w-full text-left p-4 rounded-lg bg-gray-700 hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
-                            <p className="font-bold text-white group-hover:text-gray-900">Shop Marketplace</p>
-                            <p className="text-sm text-gray-400 group-hover:text-gray-700">Explore exclusive digital and physical goods.</p>
-                        </button>
-                         <button className="w-full text-left p-4 rounded-lg bg-gray-700 hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
-                            <p className="font-bold text-white group-hover:text-gray-900">Stake Assets</p>
-                            <p className="text-sm text-gray-400 group-hover:text-gray-700">Earn rewards on your crypto holdings.</p>
-                        </button>
+                        <ActionButton icon={BuyIcon} title="Buy Cryptocurrency" subtitle="Instantly purchase BTC, ETH, and more." />
+                        <ActionButton icon={ShopIcon} title="Shop Marketplace" subtitle="Explore exclusive digital and physical goods." />
+                        <ActionButton icon={StakeIcon} title="Stake Assets" subtitle="Earn rewards on your crypto holdings." />
                     </div>
                 </Card>
 

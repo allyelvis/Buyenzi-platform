@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import Card from './Card';
-import { MOCK_ASSETS } from '../constants';
-import { SendIcon, ReceiveIcon, SwapIcon, SparklesIcon, SearchIcon } from '../constants';
+import { MOCK_ASSETS, MOCK_WALLET_ACCOUNT, CreateWalletIcon, ImportWalletIcon, SendIcon, ReceiveIcon, SwapIcon, SparklesIcon, SearchIcon, ExportWalletIcon, LockIcon, WalletIcon } from '../constants';
 import WalletChart from './WalletChart';
-import { WalletAsset } from '../types';
+import { WalletAsset, WalletAccount } from '../types';
+import CreateWalletModal from './CreateWalletModal';
+import ImportWalletModal from './ImportWalletModal';
+import ExportWalletModal from './ExportWalletModal';
+
 
 const ActionButton: React.FC<{ icon: React.ReactNode, label: string }> = ({ icon, label }) => (
     <button className="flex flex-col items-center justify-center gap-2 w-full bg-gray-700 p-4 rounded-lg hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
@@ -29,7 +32,27 @@ const AssetRow: React.FC<{ asset: WalletAsset }> = ({ asset }) => (
     </div>
 );
 
-const Wallet: React.FC = () => {
+const WalletLockedView: React.FC<{ onCreate: () => void; onImport: () => void; }> = ({ onCreate, onImport }) => (
+    <div className="p-4 md:p-8 flex items-center justify-center h-full">
+        <Card className="max-w-md w-full text-center">
+            <WalletIcon className="w-16 h-16 mx-auto text-brand-primary" />
+            <h2 className="text-2xl font-bold text-white mt-4">Your Digital Wallet</h2>
+            <p className="text-gray-400 mt-2 mb-6">Create a new wallet or import an existing one to manage your assets securely.</p>
+            <div className="space-y-4">
+                <button onClick={onCreate} className="w-full flex items-center justify-center gap-3 font-semibold text-gray-900 bg-brand-primary hover:bg-brand-secondary py-3 rounded-lg transition-colors">
+                    <CreateWalletIcon className="w-6 h-6" />
+                    Create New Wallet
+                </button>
+                <button onClick={onImport} className="w-full flex items-center justify-center gap-3 font-semibold bg-gray-700 hover:bg-gray-600 py-3 rounded-lg transition-colors">
+                    <ImportWalletIcon className="w-6 h-6" />
+                    Import Existing Wallet
+                </button>
+            </div>
+        </Card>
+    </div>
+);
+
+const WalletUnlockedView: React.FC<{ wallet: WalletAccount; onExport: () => void; onLock: () => void; }> = ({ wallet, onExport, onLock }) => {
     const totalBalance = MOCK_ASSETS.reduce((acc, asset) => acc + asset.usdValue, 0);
     const [isLoading, setIsLoading] = useState(false);
     const [insight, setInsight] = useState('');
@@ -41,7 +64,7 @@ const Wallet: React.FC = () => {
         setInsight('');
         setError('');
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             const assetSummary = MOCK_ASSETS.map(a => `${a.name} ($${a.usdValue.toLocaleString()})`).join(', ');
             const prompt = `My portfolio consists of: ${assetSummary}. My total balance is $${totalBalance.toLocaleString()}. Provide a brief, one-paragraph market sentiment analysis for a retail investor. Focus on my top 2 holdings. Keep it concise, informative, and encouraging.`;
 
@@ -64,13 +87,13 @@ const Wallet: React.FC = () => {
         asset.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
         asset.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+
     return (
         <div className="p-4 md:p-8 space-y-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-white">My Wallet</h1>
-                    <p className="text-gray-400">Manage your assets and analyze your portfolio.</p>
+                    <p className="text-gray-400 font-mono text-sm break-all">Active Address: {wallet.address}</p>
                 </div>
                  <div className="text-left sm:text-right">
                     <p className="text-gray-400 text-sm">Total Balance</p>
@@ -109,6 +132,16 @@ const Wallet: React.FC = () => {
                     </div>
                 </Card>
                 <div className="lg:col-span-2 space-y-8">
+                    <Card title="Wallet Settings">
+                        <div className="flex gap-4">
+                             <button onClick={onExport} className="w-full flex items-center justify-center gap-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 py-2.5 rounded-lg transition-colors">
+                                <ExportWalletIcon/> Export Wallet
+                            </button>
+                             <button onClick={onLock} className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 py-2.5 rounded-lg transition-colors">
+                                <LockIcon/> Lock Wallet
+                            </button>
+                        </div>
+                    </Card>
                     <Card title="Asset Allocation">
                         <WalletChart data={MOCK_ASSETS} />
                     </Card>
@@ -140,6 +173,63 @@ const Wallet: React.FC = () => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const Wallet: React.FC = () => {
+    const [activeWallet, setActiveWallet] = useState<WalletAccount | null>(null);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+    const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
+    const handleWalletCreate = (wallet: WalletAccount) => {
+        setActiveWallet(wallet);
+        setIsCreateModalOpen(false);
+    };
+
+    const handleWalletImport = (wallet: WalletAccount) => {
+        setActiveWallet(wallet);
+        setIsImportModalOpen(false);
+    };
+
+    const handleLockWallet = () => {
+        setActiveWallet(null);
+    };
+
+    return (
+        <>
+            {!activeWallet ? (
+                <WalletLockedView 
+                    onCreate={() => setIsCreateModalOpen(true)}
+                    onImport={() => setIsImportModalOpen(true)}
+                />
+            ) : (
+                <WalletUnlockedView 
+                    wallet={activeWallet}
+                    onExport={() => setIsExportModalOpen(true)}
+                    onLock={handleLockWallet}
+                />
+            )}
+
+            {isCreateModalOpen && (
+                <CreateWalletModal
+                    onClose={() => setIsCreateModalOpen(false)}
+                    onWalletCreated={handleWalletCreate}
+                />
+            )}
+            {isImportModalOpen && (
+                <ImportWalletModal
+                    onClose={() => setIsImportModalOpen(false)}
+                    onWalletImported={handleWalletImport}
+                />
+            )}
+            {activeWallet && isExportModalOpen && (
+                <ExportWalletModal
+                    wallet={activeWallet}
+                    onClose={() => setIsExportModalOpen(false)}
+                />
+            )}
+        </>
     );
 };
 

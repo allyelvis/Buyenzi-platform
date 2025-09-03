@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { NavItem as NavItemType } from '../types';
 import { NAV_ITEMS, Logo, SettingsIcon } from '../constants';
@@ -53,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
         </ul>
       </div>
 
-      <div>
+      <div className="border-t border-gray-700">
          <ul>
            <li>
               <button

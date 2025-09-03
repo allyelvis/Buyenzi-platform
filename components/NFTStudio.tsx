@@ -35,7 +35,7 @@ const NFTStudio: React.FC = () => {
         setGeneratedImageUrl(null);
         setError('');
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             const fullPrompt = `${prompt}, ${style} style`;
             
             const response = await ai.models.generateImages({

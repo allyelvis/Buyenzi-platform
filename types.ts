@@ -39,6 +39,12 @@ export type WalletAsset = {
   icon: React.ComponentType<{ className?: string }>;
 };
 
+export type WalletAccount = {
+  address: string;
+  privateKey: string;
+  recoveryPhrase: string;
+};
+
 export type GeneratedNFT = {
     id: string;
     name: string;
@@ -100,4 +106,32 @@ export type SubscriptionPlan = {
   priceUsd: number;
   priceEth: number;
   features: string[];
+};
+
+export type UserProfile = {
+    id: string;
+    name: string;
+    username: string;
+    email: string;
+    profilePictureUrl: string;
+};
+
+export type IntegrationCategory = 'DeFi' | 'E-commerce' | 'Social' | 'Data';
+
+export type Integration = {
+  id: string;
+  name: string;
+  category: IntegrationCategory;
+  description: string;
+  logoUrl: string;
+};
+
+export type MarketData = {
+  id: string;
+  name: string;
+  symbol: string;
+  price: number;
+  change24h: number;
+  icon: React.ComponentType<{ className?: string }>;
+  sparkline: number[];
 };
