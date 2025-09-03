@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -7,6 +8,9 @@ import Wallet from './components/Wallet';
 import Transactions from './components/Transactions';
 import Funding from './components/Funding';
 import NFTStudio from './components/NFTStudio';
+import Explorer from './components/Explorer';
+import Chatbot from './components/Chatbot';
+import TV from './components/TV';
 import TransactionModal from './components/TransactionModal';
 import { DEFAULT_NETWORKS, MOCK_TRANSACTIONS } from './constants';
 import { Network, Transaction } from './types';
@@ -50,10 +54,14 @@ const App: React.FC = () => {
         return <Wallet />;
       case 'NFT Studio':
         return <NFTStudio />;
+      case 'TV':
+        return <TV />;
       case 'Funding':
         return <Funding />;
       case 'Transactions':
         return <Transactions transactions={transactions} onSelectTransaction={setSelectedTransaction} />;
+      case 'Explorer':
+        return <Explorer />;
       case 'Settings':
         return <Settings 
                   networks={networks}
@@ -76,6 +84,7 @@ const App: React.FC = () => {
           {renderContent()}
         </main>
       </div>
+      <Chatbot />
        {selectedTransaction && (
           <TransactionModal 
               transaction={selectedTransaction} 

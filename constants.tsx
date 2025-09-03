@@ -1,4 +1,5 @@
-import { ChartData, Product, Transaction, Network, WalletAsset } from './types';
+
+import { Product, Transaction, Network, WalletAsset, ExplorerBlock, ExplorerTransaction, TvChannel, TvProgram, SubscriptionPlan } from './types';
 
 export const Logo = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +10,7 @@ export const Logo = ({ className }: { className?: string }) => (
 );
 
 export const DashboardIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-  <svg xmlns="http://www.w.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
   </svg>
 );
@@ -41,6 +42,19 @@ export const TransactionsIcon = ({ className = "w-6 h-6" }: { className?: string
 export const NftIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+    </svg>
+);
+
+export const TvIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 20.25h12m-7.5-3.75v3.75m3.75-3.75v3.75m-7.5-12v10.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H8.25a2.25 2.25 0 00-2.25 2.25z" />
+    </svg>
+);
+
+export const ExplorerIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l3.75 3.75" />
     </svg>
 );
 
@@ -93,6 +107,12 @@ export const ClipboardIcon = ({ className = "w-5 h-5" }: { className?: string })
     </svg>
 );
 
+export const ChatIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 01-2.53-.388m-5.18-3.122a21.739 21.739 0 01-.413-1.633c-.387-1.824.22-3.723 1.3-5.289.92-1.448 2.24-2.583 3.8-3.182.83-.332 1.7-.523 2.6-.523 4.97 0 9 3.694 9 8.25z" />
+    </svg>
+);
+
 
 export const BtcIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm-.665-5.96h-2.31l.482-1.936h2.31l-.482 1.936zm.221-3.235h-2.31l.481-1.935h2.31l-.48 1.935zm.698-1.305l.48-1.935h2.15l-.71 2.85-1.92.765zm-.698 2.61l.481-1.935h2.31l-.48 1.935h-2.31zm3.17-5.17l-1.074 4.315.698 1.305.48-1.935.24-.96.482-1.935.481-1.935h-1.29l-.017.15zM8.99 14.804l.481-1.935h3.01l-.22 3.235-3.27.815zm2.14-9.394l-.48 1.935h-2.14l-.705-2.835 3.325.9z" fill="#F7931A"/></svg>
@@ -110,18 +130,10 @@ export const NAV_ITEMS = [
   { name: 'Marketplace', icon: MarketplaceIcon },
   { name: 'Wallet', icon: WalletIcon },
   { name: 'NFT Studio', icon: NftIcon },
+  { name: 'TV', icon: TvIcon },
   { name: 'Funding', icon: FundingIcon },
   { name: 'Transactions', icon: TransactionsIcon },
-];
-
-export const MOCK_CHART_DATA: ChartData[] = [
-  { name: 'Jan', value: 4000 },
-  { name: 'Feb', value: 3000 },
-  { name: 'Mar', value: 5000 },
-  { name: 'Apr', value: 4500 },
-  { name: 'May', value: 6000 },
-  { name: 'Jun', value: 5500 },
-  { name: 'Jul', value: 7000 },
+  { name: 'Explorer', icon: ExplorerIcon },
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [
@@ -152,4 +164,71 @@ export const MOCK_ASSETS: WalletAsset[] = [
   { id: 'btc', name: 'Bitcoin', symbol: 'BTC', balance: 5.2345, usdValue: 314070.00, icon: BtcIcon },
   { id: 'eth', name: 'Ethereum', symbol: 'ETH', balance: 25.678, usdValue: 77034.00, icon: EthIcon },
   { id: 'usd', name: 'US Dollar', symbol: 'USD', balance: 10580.50, usdValue: 10580.50, icon: UsdIcon },
+];
+
+// Explorer Mock Data
+const getRandomAddress = () => `0x${[...Array(40)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+const MOCK_MINERS = [
+    '0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8', // Ethermine
+    '0x829BD824B016326A401d083B33D092293333A830', // F2Pool
+    '0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c', // Spark Pool
+    '0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8', // Nanopool
+];
+
+export const generateMockExplorerTransactions = (count: number, blockNumber: number): ExplorerTransaction[] => {
+    return Array.from({ length: count }, (_, i) => ({
+        hash: `0x${[...Array(64)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+        blockNumber,
+        from: getRandomAddress(),
+        to: getRandomAddress(),
+        value: parseFloat((Math.random() * 5).toFixed(4)),
+        gasFee: parseFloat((Math.random() * 0.01).toFixed(6)),
+        timestamp: Date.now() - i * 3000 - Math.random() * 1000,
+    }));
+};
+
+export const MOCK_EXPLORER_TRANSACTIONS: ExplorerTransaction[] = generateMockExplorerTransactions(20, 18000000);
+
+export const generateMockBlocks = (count: number, startBlock: number): ExplorerBlock[] => {
+    return Array.from({ length: count }, (_, i) => {
+        const txnCount = Math.floor(Math.random() * 200) + 50;
+        const gasUsed = Math.floor(Math.random() * 15000000) + 8000000;
+        return {
+            number: startBlock - i,
+            timestamp: Date.now() - i * 12000 - Math.random() * 2000,
+            txnCount,
+            miner: MOCK_MINERS[Math.floor(Math.random() * MOCK_MINERS.length)],
+            gasUsed,
+            gasLimit: 30000000,
+        };
+    });
+};
+
+export const MOCK_BLOCKS: ExplorerBlock[] = generateMockBlocks(20, 18000000);
+
+// TV Feature Mock Data
+export const MOCK_TV_CHANNELS: TvChannel[] = [
+    { id: 'espn', name: 'ESPN', logoUrl: 'https://i.imgur.com/s2JzT3s.png', category: 'Sports' },
+    { id: 'hbo', name: 'HBO Max', logoUrl: 'https://i.imgur.com/8Qp4YgT.png', category: 'Movies' },
+    { id: 'mtv', name: 'MTV Live', logoUrl: 'https://i.imgur.com/dK1D4z7.png', category: 'Music' },
+    { id: 'cnn', name: 'CNN', logoUrl: 'https://i.imgur.com/2p0nOJw.png', category: 'News' },
+    { id: 'nbc', name: 'NBC', logoUrl: 'https://i.imgur.com/G5T7y2P.png', category: 'General' },
+    { id: 'fox-sports', name: 'Fox Sports 1', logoUrl: 'https://i.imgur.com/O7x1w3E.png', category: 'Sports' },
+    { id: 'showtime', name: 'Showtime', logoUrl: 'https://i.imgur.com/1B9Z1hA.png', category: 'Movies' },
+];
+
+export const MOCK_TV_PROGRAMS: TvProgram[] = [
+    { id: 'p1', channelId: 'espn', title: 'SportsCenter', description: 'The latest sports news and highlights.', startTime: new Date(Date.now() - 30 * 60000), endTime: new Date(Date.now() + 30 * 60000) },
+    { id: 'p2', channelId: 'hbo', title: 'Dune: Part Two', description: 'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.', startTime: new Date(Date.now() - 60 * 60000), endTime: new Date(Date.now() + 90 * 60000) },
+    { id: 'p3', channelId: 'mtv', title: 'Top 20 Video Countdown', description: 'The hottest music videos of the week.', startTime: new Date(Date.now() - 15 * 60000), endTime: new Date(Date.now() + 45 * 60000) },
+    { id: 'p4', channelId: 'cnn', title: 'The Situation Room', description: 'Breaking news coverage with Wolf Blitzer.', startTime: new Date(Date.now() - 20 * 60000), endTime: new Date(Date.now() + 40 * 60000) },
+    { id: 'p5', channelId: 'nbc', title: 'The Tonight Show', description: 'Featuring celebrity guests, comedy sketches, and musical performances.', startTime: new Date(Date.now() - 5 * 60000), endTime: new Date(Date.now() + 55 * 60000) },
+    { id: 'p6', channelId: 'fox-sports', title: 'Live: MLB Baseball', description: 'Yankees vs. Red Sox live from Fenway Park.', startTime: new Date(Date.now() - 90 * 60000), endTime: new Date(Date.now() + 90 * 60000) },
+    { id: 'p7', channelId: 'showtime', title: 'Billions Season Premiere', description: 'The high-stakes world of New York finance.', startTime: new Date(Date.now() - 10 * 60000), endTime: new Date(Date.now() + 50 * 60000) },
+];
+
+export const MOCK_SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
+    { id: 'basic', name: 'Basic Tier', priceUsd: 14.99, priceEth: 0.005, features: ['Access to 50+ channels', '720p HD Streaming', 'Watch on 1 screen'] },
+    { id: 'premium', name: 'Premium Tier', priceUsd: 29.99, priceEth: 0.01, features: ['Access to 150+ channels', '4K UHD Streaming', 'Watch on 4 screens', 'Includes Sports & Movies pack'] },
+    { id: 'ultimate', name: 'Ultimate Crypto', priceUsd: 49.99, priceEth: 0.015, features: ['Everything in Premium', 'Exclusive NFT drops', 'Ad-free experience', 'Early access to new content'] },
 ];

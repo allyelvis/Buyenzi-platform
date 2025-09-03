@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './Card';
-import Chart from './Chart';
-import { MOCK_CHART_DATA, MOCK_PRODUCTS } from '../constants';
+import TradingViewChart from './TradingViewChart';
+import { MOCK_PRODUCTS } from '../constants';
 import { Transaction, Product } from '../types';
 import TransactionRow from './TransactionRow';
 
@@ -38,9 +38,9 @@ const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction
 
     return (
         <div className="p-4 md:p-8 space-y-8">
-            {/* Top Row: Portfolio and Quick Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <Card title="Portfolio Overview" className="lg:col-span-2">
+            {/* Top Row: Portfolio */}
+            <div className="grid grid-cols-1 gap-8">
+                <Card title="Portfolio Overview">
                     <div className="flex items-start justify-between mb-4">
                         <div>
                             <p className="text-gray-400 text-sm">Total Balance</p>
@@ -51,10 +51,15 @@ const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction
                             <span>12.5%</span>
                         </div>
                     </div>
-                    <Chart data={MOCK_CHART_DATA} />
+                    <div className="h-[450px]">
+                      <TradingViewChart symbol="BITSTAMP:BTCUSD" />
+                    </div>
                 </Card>
+            </div>
 
-                <Card title="Quick Actions">
+            {/* Bottom Row: Actions, Products, and Transactions */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                 <Card title="Quick Actions">
                     <div className="space-y-4">
                          <button className="w-full text-left p-4 rounded-lg bg-gray-700 hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
                             <p className="font-bold text-white group-hover:text-gray-900">Buy Cryptocurrency</p>
@@ -70,16 +75,14 @@ const Dashboard: React.FC<DashboardProps> = ({ transactions, onSelectTransaction
                         </button>
                     </div>
                 </Card>
-            </div>
 
-            {/* Bottom Row: E-commerce and Transactions */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <Card title="Featured Products" className="lg:col-span-3">
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card title="Featured Products" className="lg:col-span-1">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
                         {MOCK_PRODUCTS.map(product => <ProductCard key={product.id} product={product} />)}
                     </div>
                 </Card>
-                <Card title="Recent Transactions" className="lg:col-span-2">
+
+                <Card title="Recent Transactions" className="lg:col-span-1">
                     <div className="flow-root">
                         <div className="-my-3 divide-y divide-gray-700">
                              {recentTransactions.map(tx => <TransactionRow key={tx.id} transaction={tx} onClick={() => onSelectTransaction(tx)} />)}

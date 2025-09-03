@@ -4,11 +4,6 @@ export type NavItem = {
   icon: React.ComponentType<{ className?: string }>;
 };
 
-export type ChartData = {
-  name: string;
-  value: number;
-};
-
 export type Transaction = {
   id: string;
   description: string;
@@ -50,4 +45,59 @@ export type GeneratedNFT = {
     description: string;
     imageUrl: string;
     txHash: string;
+};
+
+export type ExplorerBlock = {
+  number: number;
+  timestamp: number;
+  txnCount: number;
+  miner: string;
+  gasUsed: number;
+  gasLimit: number;
+};
+
+export type ExplorerTransaction = {
+  hash: string;
+  blockNumber: number;
+  from: string;
+  to: string;
+  value: number; // in ETH
+  gasFee: number; // in ETH
+  timestamp: number;
+};
+
+export type ExplorerAddress = {
+    address: string;
+    balance: number; // in ETH
+    totalTx: number;
+};
+
+export type ChatMessage = {
+    id:string;
+    text: string;
+    isUser: boolean;
+};
+
+export type TvChannel = {
+  id: string;
+  name: string;
+  logoUrl: string;
+  category: 'Sports' | 'Movies' | 'Music' | 'News' | 'General';
+};
+
+export type TvProgram = {
+  id: string;
+  channelId: string;
+  title: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+};
+
+export type SubscriptionPlan = {
+  id: string;
+  name: string;
+  priceUsd: number;
+  priceEth: number;
+  features: string[];
 };
