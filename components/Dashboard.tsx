@@ -54,6 +54,14 @@ const ProductCard: React.FC<{product: Product}> = ({ product }) => (
 
 const Dashboard: React.FC = () => {
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+    const [transactions, setTransactions] = useState<Transaction[]>(MOCK_TRANSACTIONS);
+
+    const handleDeleteTransaction = (transactionId: string) => {
+        setTransactions(currentTransactions =>
+            currentTransactions.filter(tx => tx.id !== transactionId)
+        );
+        setSelectedTransaction(null); // Close modal after deletion
+    };
 
     return (
         <div className="p-4 md:p-8 space-y-8">
@@ -101,7 +109,7 @@ const Dashboard: React.FC = () => {
                 <Card title="Recent Transactions" className="lg:col-span-2">
                     <div className="flow-root">
                         <div className="-my-3 divide-y divide-gray-700">
-                             {MOCK_TRANSACTIONS.map(tx => <TransactionRow key={tx.id} transaction={tx} onClick={() => setSelectedTransaction(tx)} />)}
+                             {transactions.map(tx => <TransactionRow key={tx.id} transaction={tx} onClick={() => setSelectedTransaction(tx)} />)}
                         </div>
                     </div>
                 </Card>
@@ -109,7 +117,8 @@ const Dashboard: React.FC = () => {
             {selectedTransaction && (
                 <TransactionModal 
                     transaction={selectedTransaction} 
-                    onClose={() => setSelectedTransaction(null)} 
+                    onClose={() => setSelectedTransaction(null)}
+                    onDelete={handleDeleteTransaction}
                 />
             )}
         </div>

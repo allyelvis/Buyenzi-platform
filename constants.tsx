@@ -1,5 +1,5 @@
 
-import { ChartData, Product, Transaction } from './types';
+import { ChartData, Product, Transaction, Network } from './types';
 
 export const Logo = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
@@ -46,6 +46,12 @@ export const SettingsIcon = ({ className = "w-6 h-6" }: { className?: string }) 
   </svg>
 );
 
+export const NetworkIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+    </svg>
+);
+
 
 export const NAV_ITEMS = [
   { name: 'Dashboard', icon: DashboardIcon },
@@ -77,4 +83,10 @@ export const MOCK_PRODUCTS: Product[] = [
     { id: 2, name: 'Decentralized Cloud Storage', category: 'Web3 Service', price: 99.99, imageUrl: 'https://picsum.photos/seed/tech2/400/300' },
     { id: 3, name: 'AI Personal Assistant', category: 'Software', price: 49.99, imageUrl: 'https://picsum.photos/seed/tech3/400/300' },
     { id: 4, name: 'Exclusive NFT Art Pass', category: 'Digital Collectible', price: 1250.00, imageUrl: 'https://picsum.photos/seed/tech4/400/300' },
+];
+
+export const DEFAULT_NETWORKS: Network[] = [
+  { id: 'eth_mainnet', name: 'Ethereum Mainnet', rpcUrl: 'https://mainnet.infura.io/v3/PROJECT_ID', chainId: 1, currencySymbol: 'ETH' },
+  { id: 'polygon_mainnet', name: 'Polygon Mainnet', rpcUrl: 'https://polygon-rpc.com', chainId: 137, currencySymbol: 'MATIC' },
+  { id: 'arbitrum_one', name: 'Arbitrum One', rpcUrl: 'https://arb1.arbitrum.io/rpc', chainId: 42161, currencySymbol: 'ETH' },
 ];

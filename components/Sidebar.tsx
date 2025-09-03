@@ -30,6 +30,11 @@ const NavItem: React.FC<{
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
+  const isSettingsActive = activeView === 'Settings';
+  const settingsClasses = isSettingsActive 
+    ? 'bg-brand-primary/10 text-brand-primary' 
+    : 'text-gray-400 hover:bg-gray-700 hover:text-white';
+
   return (
     <nav className="w-72 flex-shrink-0 bg-gray-800 flex flex-col justify-between border-r border-gray-700">
       <div>
@@ -52,7 +57,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
          <ul>
            <li>
               <button
-                className={`flex items-center w-full px-6 py-4 space-x-4 transition-colors duration-200 text-gray-400 hover:bg-gray-700 hover:text-white`}
+                onClick={() => setActiveView('Settings')}
+                className={`flex items-center w-full px-6 py-4 space-x-4 transition-colors duration-200 ${settingsClasses}`}
               >
                 <SettingsIcon className="w-6 h-6" />
                 <span className="font-semibold text-lg">Settings</span>

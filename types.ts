@@ -25,3 +25,12 @@ export type Product = {
   price: number;
   imageUrl: string;
 };
+
+export type Network = {
+  id: string;
+  name: string;
+  rpcUrl: string;
+  chainId: number;
+  currencySymbol: string;
+  isCustom?: boolean;
+};
