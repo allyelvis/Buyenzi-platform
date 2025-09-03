@@ -45,7 +45,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ transaction, onClos
     };
 
     const isPositive = transaction.amount > 0;
-    const amountColor = isPositive ? 'text-green-400' : 'text-red-400';
+    const amountColor = isPositive ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400';
     const sign = isPositive ? '+' : '';
     const formattedAmount = `${sign}${transaction.amount.toLocaleString()} ${transaction.currency}`;
     const formattedTimestamp = new Date(transaction.timestamp).toLocaleString(undefined, {
@@ -58,7 +58,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ transaction, onClos
             role="dialog"
             aria-modal="true"
             aria-labelledby="transaction-modal-title"
-            className="fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 transition-opacity animate-[fade-in_0.2s_ease-out]"
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 transition-opacity animate-[fade-in_0.2s_ease-out]"
             onClick={onClose}
         >
             <style>{`
@@ -78,42 +78,42 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ transaction, onClos
                 <Card titleClassName="pr-10" title="Transaction Details" className="relative border-2 border-brand-primary/20">
                     <button
                         onClick={onClose}
-                        className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+                        className="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                         aria-label="Close modal"
                     >
                         <XIcon className="w-6 h-6" />
                     </button>
-                    <div className="space-y-5 mt-2 text-gray-200">
+                    <div className="space-y-5 mt-2 text-gray-700 dark:text-gray-200">
                         <div>
-                            <p className="text-sm text-gray-400">Description</p>
-                            <p className="font-semibold text-lg text-white">{transaction.description}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Description</p>
+                            <p className="font-semibold text-lg text-gray-900 dark:text-white">{transaction.description}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-sm text-gray-400">Amount</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Amount</p>
                                 <p className={`font-bold text-xl ${amountColor}`}>{formattedAmount}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-400">Type</p>
-                                <p className="font-semibold text-lg capitalize bg-gray-700 inline-block px-2 py-1 rounded">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Type</p>
+                                <p className="font-semibold text-lg capitalize bg-gray-100 dark:bg-gray-700 inline-block px-2 py-1 rounded">
                                     {transaction.type}
                                 </p>
                             </div>
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Transaction ID</p>
-                            <p className="font-mono text-xs text-gray-300 break-all bg-gray-900 p-2 rounded-md">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Transaction ID</p>
+                            <p className="font-mono text-xs text-gray-600 dark:text-gray-300 break-all bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
                                 {transaction.id}
                             </p>
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Timestamp</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Timestamp</p>
                             <p className="font-semibold">{formattedTimestamp}</p>
                         </div>
-                         <div className="pt-4 border-t border-gray-700">
+                         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                             <button
                                 onClick={handleDelete}
-                                className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 py-2.5 rounded-lg transition-colors duration-200"
+                                className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-500 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 py-2.5 rounded-lg transition-colors duration-200"
                                 aria-label="Delete this transaction"
                             >
                                 <TrashIcon />

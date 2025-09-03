@@ -14,9 +14,9 @@ const CustomTooltip = ({ active, payload }: any) => {
         const data = payload[0].payload;
         const percentage = (payload[0].value / data.totalValue * 100).toFixed(2);
         return (
-            <div className="bg-gray-700 p-3 rounded-lg border border-gray-600 shadow-lg">
-                <p className="font-bold text-white">{`${data.name}: $${data.usdValue.toLocaleString()}`}</p>
-                <p className="text-sm text-gray-300">{`Represents ${percentage}% of your portfolio`}</p>
+            <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600 shadow-lg">
+                <p className="font-bold text-gray-900 dark:text-white">{`${data.name}: $${data.usdValue.toLocaleString()}`}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{`Represents ${percentage}% of your portfolio`}</p>
             </div>
         );
     }
@@ -49,7 +49,7 @@ const WalletChart: React.FC<WalletChartProps> = ({ data }) => {
                     <Tooltip content={<CustomTooltip />} />
                     <Legend
                         iconType="circle"
-                        formatter={(value, entry) => <span className="text-gray-300 ml-2">{value}</span>}
+                        formatter={(value, entry) => <span className="text-gray-600 dark:text-gray-300 ml-2">{value}</span>}
                     />
                 </PieChart>
             </ResponsiveContainer>

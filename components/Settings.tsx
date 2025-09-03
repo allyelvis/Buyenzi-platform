@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Network } from '../types';
 import Card from './Card';
 import AddNetworkModal from './AddNetworkModal';
+import { useTheme } from './ThemeProvider';
 
 interface SettingsProps {
     networks: Network[];
@@ -18,20 +19,44 @@ const TrashIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     </svg>
 );
 
+const ToggleSwitch: React.FC<{ enabled: boolean; setEnabled: () => void; }> = ({ enabled, setEnabled }) => (
+    <button
+        type="button"
+        role="switch"
+        aria-checked={enabled}
+        onClick={setEnabled}
+        className={`${enabled ? 'bg-brand-primary' : 'bg-gray-300 dark:bg-gray-600'} relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0`}
+    >
+        <span className={`${enabled ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition-transform`} />
+    </button>
+);
+
+
 const Settings: React.FC<SettingsProps> = ({ networks, selectedNetworkId, onSelectNetwork, onAddNetwork, onDeleteNetwork }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { theme, toggleTheme } = useTheme();
 
     return (
         <div className="p-4 md:p-8 space-y-8">
-            <h1 className="text-3xl font-bold text-white">Settings</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
+            
+            <Card title="Appearance">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <p className="font-semibold text-gray-800 dark:text-white">Dark Mode</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Toggle between light and dark themes.</p>
+                    </div>
+                    <ToggleSwitch enabled={theme === 'dark'} setEnabled={toggleTheme} />
+                </div>
+            </Card>
 
             <Card title="Network Configuration">
                 <div className="space-y-4">
-                    <p className="text-gray-400">Select the network to connect to, or add a custom RPC endpoint for private networks.</p>
+                    <p className="text-gray-500 dark:text-gray-400">Select the network to connect to, or add a custom RPC endpoint for private networks.</p>
                     
                     <div className="space-y-3">
                         {networks.map(network => (
-                            <div key={network.id} className={`flex items-center justify-between p-4 rounded-lg border-2 transition-colors ${selectedNetworkId === network.id ? 'bg-gray-700/50 border-brand-primary' : 'bg-gray-800 border-gray-700'}`}>
+                            <div key={network.id} className={`flex items-center justify-between p-4 rounded-lg border-2 transition-colors ${selectedNetworkId === network.id ? 'bg-gray-100/50 dark:bg-gray-700/50 border-brand-primary' : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'}`}>
                                 <label htmlFor={`network-${network.id}`} className="flex-1 cursor-pointer">
                                     <div className="flex items-center">
                                         <input
@@ -40,18 +65,18 @@ const Settings: React.FC<SettingsProps> = ({ networks, selectedNetworkId, onSele
                                             name="network"
                                             checked={selectedNetworkId === network.id}
                                             onChange={() => onSelectNetwork(network.id)}
-                                            className="h-4 w-4 text-brand-primary bg-gray-600 border-gray-500 focus:ring-brand-secondary"
+                                            className="h-4 w-4 text-brand-primary bg-gray-200 dark:bg-gray-600 border-gray-300 dark:border-gray-500 focus:ring-brand-secondary"
                                         />
                                         <div className="ml-4">
-                                            <p className="font-semibold text-white">{network.name} {network.isCustom && <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full ml-2">Custom</span>}</p>
-                                            <p className="text-sm text-gray-400 font-mono">{network.rpcUrl}</p>
+                                            <p className="font-semibold text-gray-800 dark:text-white">{network.name} {network.isCustom && <span className="text-xs bg-gray-200 dark:bg-gray-600 px-2 py-0.5 rounded-full ml-2">Custom</span>}</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 font-mono">{network.rpcUrl}</p>
                                         </div>
                                     </div>
                                 </label>
                                 {network.isCustom && (
                                     <button 
                                         onClick={() => onDeleteNetwork(network.id)}
-                                        className="text-gray-400 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-500/10"
+                                        className="text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-500/10"
                                         aria-label={`Delete ${network.name} network`}
                                     >
                                         <TrashIcon />

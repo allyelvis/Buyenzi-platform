@@ -15,16 +15,16 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ selectedNetwork, setActiveView }) => {
   return (
-    <header className="flex-shrink-0 bg-gray-800 border-b border-gray-700">
+    <header className="flex-shrink-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between p-4 h-20">
         <div className="flex items-center gap-4">
             {selectedNetwork && (
-                <div className="flex items-center gap-2 bg-gray-700 px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
                     <span className="relative flex h-3 w-3">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                     </span>
-                    <span className="text-sm font-semibold text-white">{selectedNetwork.name}</span>
+                    <span className="text-sm font-semibold text-gray-800 dark:text-white">{selectedNetwork.name}</span>
                 </div>
             )}
             <div className="relative w-full max-w-md hidden sm:block">
@@ -34,13 +34,13 @@ const Header: React.FC<HeaderProps> = ({ selectedNetwork, setActiveView }) => {
                 <input
                     type="text"
                     placeholder="Search assets, products, or transactions..."
-                    className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                    className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
                 />
             </div>
         </div>
 
         <div className="flex items-center space-x-6">
-          <button className="relative text-gray-400 hover:text-white transition-colors">
+          <button className="relative text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
             <BellIcon />
             <span className="absolute -top-1 -right-1 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-secondary opacity-75"></span>
@@ -48,15 +48,15 @@ const Header: React.FC<HeaderProps> = ({ selectedNetwork, setActiveView }) => {
             </span>
           </button>
           
-          <button onClick={() => setActiveView('Profile')} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-colors">
+          <button onClick={() => setActiveView('Profile')} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
             <img 
               src="https://picsum.photos/seed/user/40/40" 
               alt="User" 
               className="h-10 w-10 rounded-full object-cover border-2 border-brand-secondary"
             />
             <div className="hidden md:block text-left">
-              <p className="text-white font-semibold text-sm">Alex Ryder</p>
-              <p className="text-gray-400 text-xs">Tier: Quantum</p>
+              <p className="text-gray-800 dark:text-white font-semibold text-sm">Alex Ryder</p>
+              <p className="text-gray-500 dark:text-gray-400 text-xs">Tier: Quantum</p>
             </div>
           </button>
         </div>

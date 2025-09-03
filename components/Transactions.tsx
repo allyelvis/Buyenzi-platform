@@ -27,7 +27,7 @@ const Transactions: React.FC<TransactionsProps> = ({ transactions, onSelectTrans
         <select
             value={value}
             onChange={onChange}
-            className="bg-gray-700 border border-gray-600 rounded-lg text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary"
+            className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-800 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary"
         >
             {options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
@@ -36,8 +36,8 @@ const Transactions: React.FC<TransactionsProps> = ({ transactions, onSelectTrans
     return (
         <div className="p-4 md:p-8 space-y-8">
             <div>
-                <h1 className="text-3xl font-bold text-white">Transaction History</h1>
-                <p className="text-gray-400">Review, filter, and search your complete transaction record.</p>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Transaction History</h1>
+                <p className="text-gray-500 dark:text-gray-400">Review, filter, and search your complete transaction record.</p>
             </div>
 
             <Card>
@@ -51,7 +51,7 @@ const Transactions: React.FC<TransactionsProps> = ({ transactions, onSelectTrans
                             placeholder="Search by description..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
                         />
                     </div>
                     <div className="flex gap-4">
@@ -79,13 +79,13 @@ const Transactions: React.FC<TransactionsProps> = ({ transactions, onSelectTrans
                 </div>
 
                 <div className="flow-root">
-                    <div className="-my-3 divide-y divide-gray-700">
+                    <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-700">
                         {filteredTransactions.length > 0 ? (
                             filteredTransactions.map(tx => (
                                 <TransactionRow key={tx.id} transaction={tx} onClick={() => onSelectTransaction(tx)} />
                             ))
                         ) : (
-                            <p className="text-center text-gray-400 py-12">No transactions match your filters.</p>
+                            <p className="text-center text-gray-500 dark:text-gray-400 py-12">No transactions match your filters.</p>
                         )}
                     </div>
                 </div>

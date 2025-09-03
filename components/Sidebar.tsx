@@ -13,7 +13,7 @@ const NavItem: React.FC<{
   onClick: () => void;
 }> = ({ item, isActive, onClick }) => {
   const activeClasses = 'bg-brand-primary/10 text-brand-primary border-r-4 border-brand-primary';
-  const inactiveClasses = 'text-gray-400 hover:bg-gray-700 hover:text-white';
+  const inactiveClasses = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white';
   
   return (
     <li>
@@ -32,12 +32,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
   const isSettingsActive = activeView === 'Settings';
   const settingsClasses = isSettingsActive 
     ? 'bg-brand-primary/10 text-brand-primary' 
-    : 'text-gray-400 hover:bg-gray-700 hover:text-white';
+    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white';
 
   return (
-    <nav className="w-72 flex-shrink-0 bg-gray-800 flex flex-col justify-between border-r border-gray-700">
+    <nav className="w-72 flex-shrink-0 bg-white dark:bg-gray-800 flex flex-col justify-between border-r border-gray-200 dark:border-gray-700">
       <div>
-        <div className="flex items-center justify-center h-20 border-b border-gray-700">
+        <div className="flex items-center justify-center h-20 border-b border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white">
           <Logo className="h-10 w-auto" />
         </div>
         <ul className="mt-6">
@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
         </ul>
       </div>
 
-      <div className="border-t border-gray-700">
+      <div className="border-t border-gray-200 dark:border-gray-700">
          <ul>
            <li>
               <button

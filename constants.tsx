@@ -2,7 +2,7 @@ import { Product, Transaction, Network, WalletAsset, WalletAccount, ExplorerBloc
 
 export const Logo = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
-    <text x="0" y="30" fontFamily="Inter, sans-serif" fontSize="32" fontWeight="900" fill="white">
+    <text x="0" y="30" fontFamily="Inter, sans-serif" fontSize="32" fontWeight="900" fill="currentColor">
       buyenzi
     </text>
   </svg>

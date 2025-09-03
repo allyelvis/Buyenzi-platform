@@ -10,24 +10,24 @@ import ExportWalletModal from './ExportWalletModal';
 
 
 const ActionButton: React.FC<{ icon: React.ReactNode, label: string }> = ({ icon, label }) => (
-    <button className="flex flex-col items-center justify-center gap-2 w-full bg-gray-700 p-4 rounded-lg hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
+    <button className="flex flex-col items-center justify-center gap-2 w-full bg-gray-100 dark:bg-gray-700 p-4 rounded-lg hover:bg-brand-primary hover:text-gray-900 transition-all duration-200 group">
         <div className="text-brand-primary group-hover:text-gray-900">{icon}</div>
-        <span className="font-semibold text-white group-hover:text-gray-900">{label}</span>
+        <span className="font-semibold text-gray-800 dark:text-white group-hover:text-gray-900">{label}</span>
     </button>
 );
 
 const AssetRow: React.FC<{ asset: WalletAsset }> = ({ asset }) => (
-    <div className="flex items-center justify-between py-3 border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 rounded-lg transition-colors duration-200 px-2 -mx-2">
+    <div className="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-colors duration-200 px-2 -mx-2">
         <div className="flex items-center gap-4">
             <asset.icon className="w-10 h-10" />
             <div>
-                <p className="font-bold text-white">{asset.name}</p>
-                <p className="text-sm text-gray-400">{asset.balance.toLocaleString()} {asset.symbol}</p>
+                <p className="font-bold text-gray-900 dark:text-white">{asset.name}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{asset.balance.toLocaleString()} {asset.symbol}</p>
             </div>
         </div>
         <div className="text-right">
-            <p className="font-semibold text-white">${asset.usdValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p className="text-sm text-gray-400">USD</p>
+            <p className="font-semibold text-gray-900 dark:text-white">${asset.usdValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">USD</p>
         </div>
     </div>
 );
@@ -36,14 +36,14 @@ const WalletLockedView: React.FC<{ onCreate: () => void; onImport: () => void; }
     <div className="p-4 md:p-8 flex items-center justify-center h-full">
         <Card className="max-w-md w-full text-center">
             <WalletIcon className="w-16 h-16 mx-auto text-brand-primary" />
-            <h2 className="text-2xl font-bold text-white mt-4">Your Digital Wallet</h2>
-            <p className="text-gray-400 mt-2 mb-6">Create a new wallet or import an existing one to manage your assets securely.</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4">Your Digital Wallet</h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-2 mb-6">Create a new wallet or import an existing one to manage your assets securely.</p>
             <div className="space-y-4">
                 <button onClick={onCreate} className="w-full flex items-center justify-center gap-3 font-semibold text-gray-900 bg-brand-primary hover:bg-brand-secondary py-3 rounded-lg transition-colors">
                     <CreateWalletIcon className="w-6 h-6" />
                     Create New Wallet
                 </button>
-                <button onClick={onImport} className="w-full flex items-center justify-center gap-3 font-semibold bg-gray-700 hover:bg-gray-600 py-3 rounded-lg transition-colors">
+                <button onClick={onImport} className="w-full flex items-center justify-center gap-3 font-semibold text-gray-800 dark:text-white bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg transition-colors">
                     <ImportWalletIcon className="w-6 h-6" />
                     Import Existing Wallet
                 </button>
@@ -92,12 +92,12 @@ const WalletUnlockedView: React.FC<{ wallet: WalletAccount; onExport: () => void
         <div className="p-4 md:p-8 space-y-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">My Wallet</h1>
-                    <p className="text-gray-400 font-mono text-sm break-all">Active Address: {wallet.address}</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Wallet</h1>
+                    <p className="text-gray-500 dark:text-gray-400 font-mono text-sm break-all">Active Address: {wallet.address}</p>
                 </div>
                  <div className="text-left sm:text-right">
-                    <p className="text-gray-400 text-sm">Total Balance</p>
-                    <p className="text-4xl font-bold text-white">${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Total Balance</p>
+                    <p className="text-4xl font-bold text-gray-900 dark:text-white">${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
             </div>
 
@@ -118,15 +118,15 @@ const WalletUnlockedView: React.FC<{ wallet: WalletAccount; onExport: () => void
                             placeholder="Search assets..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
                         />
                     </div>
                     <div className="flow-root max-h-[350px] overflow-y-auto pr-2">
-                        <div className="-my-3 divide-y divide-gray-700">
+                        <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-700">
                             {filteredAssets.length > 0 ? (
                                 filteredAssets.map(asset => <AssetRow key={asset.id} asset={asset} />)
                             ) : (
-                                <p className="text-center text-gray-400 py-8">No assets found.</p>
+                                <p className="text-center text-gray-500 dark:text-gray-400 py-8">No assets found.</p>
                             )}
                         </div>
                     </div>
@@ -134,10 +134,10 @@ const WalletUnlockedView: React.FC<{ wallet: WalletAccount; onExport: () => void
                 <div className="lg:col-span-2 space-y-8">
                     <Card title="Wallet Settings">
                         <div className="flex gap-4">
-                             <button onClick={onExport} className="w-full flex items-center justify-center gap-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 py-2.5 rounded-lg transition-colors">
+                             <button onClick={onExport} className="w-full flex items-center justify-center gap-2 text-sm font-semibold bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-2.5 rounded-lg transition-colors">
                                 <ExportWalletIcon/> Export Wallet
                             </button>
-                             <button onClick={onLock} className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 py-2.5 rounded-lg transition-colors">
+                             <button onClick={onLock} className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-500 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 py-2.5 rounded-lg transition-colors">
                                 <LockIcon/> Lock Wallet
                             </button>
                         </div>
@@ -148,26 +148,26 @@ const WalletUnlockedView: React.FC<{ wallet: WalletAccount; onExport: () => void
                     <Card title="AI Portfolio Insight">
                         <div className="space-y-4">
                             {!insight && !isLoading && !error && (
-                                <p className="text-gray-400 text-sm">Click the button below to generate an AI-powered analysis of your current portfolio holdings.</p>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm">Click the button below to generate an AI-powered analysis of your current portfolio holdings.</p>
                             )}
                             {isLoading && (
-                                <div className="flex items-center gap-3 text-gray-400">
+                                <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
                                     <div className="w-5 h-5 border-2 border-dashed rounded-full animate-spin border-brand-primary"></div>
                                     <span>Generating your analysis...</span>
                                 </div>
                             )}
-                            {error && <p className="text-red-400 text-sm">{error}</p>}
-                            {insight && <p className="text-gray-200 whitespace-pre-wrap text-sm">{insight}</p>}
+                            {error && <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>}
+                            {insight && <p className="text-gray-700 dark:text-gray-200 whitespace-pre-wrap text-sm">{insight}</p>}
 
                             <button
                                 onClick={handleGenerateInsight}
                                 disabled={isLoading}
-                                className="w-full flex items-center justify-center gap-2 font-semibold text-gray-900 bg-brand-primary hover:bg-brand-secondary py-2.5 rounded-lg transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                                className="w-full flex items-center justify-center gap-2 font-semibold text-gray-900 bg-brand-primary hover:bg-brand-secondary py-2.5 rounded-lg transition-colors duration-200 disabled:bg-gray-500 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
                             >
                                 <SparklesIcon className="w-5 h-5" />
                                 {isLoading ? "Analyzing..." : "Generate Insight"}
                             </button>
-                             <p className="text-xs text-center text-gray-500">Powered by Gemini</p>
+                             <p className="text-xs text-center text-gray-400 dark:text-gray-500">Powered by Gemini</p>
                         </div>
                     </Card>
                 </div>
